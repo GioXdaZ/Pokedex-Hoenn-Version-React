@@ -9,7 +9,7 @@ function App() {
   return (
     <div>
       <Navbar />
-      <div className="background-body flex justify-center items-center h-[1000px]">
+      <div className="background-body flex justify-center items-center h-[800px]">
         <Pokedex></Pokedex>
       </div>
       <Footer></Footer>

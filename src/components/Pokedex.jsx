@@ -1,8 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../App.css";
 import { Screen } from "./Screen";
 
 export const Pokedex = () => {
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [pokemon, setPokemon] = useState(null);
+  const RandomId = Math.floor(Math.random() * 385 + 1);
+  const [pokemonID, setPokemonId] = useState(RandomId);
+
+  useEffect(() => {
+    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonID}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setPokemon(data);
+        setLoading(false);
+        setError(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+        setError(true);
+      });
+  }, []);
+
   return (
     <div className="pokedex-container flex flex-col justify-center items-center w-full h-[600px]">
       <div className="pokeball flex justify-center items-center">
@@ -37,7 +57,12 @@ export const Pokedex = () => {
           </div>
           <div className="bg-pokeball"></div>
           <div className="bg-screen">
-            <Screen />
+            <Screen
+              pokemon={pokemon}
+              loading={loading}
+              error={error}
+              pokemonID={pokemonID}
+            />
           </div>
         </div>
       </div>

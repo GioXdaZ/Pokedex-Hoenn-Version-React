@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "../App.css";
 import { Screen } from "./Screen";
+import Reload from "../assets/reload.svg";
+import GitHub from "../assets/github.svg";
 
 export const Pokedex = () => {
   const [error, setError] = useState(false);
@@ -8,6 +10,7 @@ export const Pokedex = () => {
   const [pokemon, setPokemon] = useState(null);
   const RandomId = Math.floor(Math.random() * 385 + 1);
   const [pokemonID, setPokemonId] = useState(RandomId);
+  const [pokemonName, setPokemonName] = useState("");
 
   useEffect(() => {
     fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonID}`)
@@ -23,6 +26,14 @@ export const Pokedex = () => {
       });
   }, []);
 
+  const RefreshPage = () => window.location.reload(false);
+
+  if (error) {
+    let lightColor = document.getElementById("light");
+    lightColor.classList.remove("light-color-g");
+    lightColor.classList.add("light-color-r");
+  }
+
   return (
     <div className="pokedex-container flex flex-col justify-center items-center w-full h-[600px]">
       <div className="pokeball flex justify-center items-center">
@@ -35,11 +46,18 @@ export const Pokedex = () => {
         <div className="pokedex">
           <div className="bg-line flex justify-center mt-40">
             <div className="buttons-container flex flex-col">
-              <div className="button btn-1"></div>
-              <div className="button btn-2"></div>
+              <button className="button btn-1" onClick={RefreshPage}>
+                <img className="reload" src={Reload} alt="Reload" />
+              </button>
+              <button className="button btn-2 flex justify-center items-center">
+                <img src={GitHub} alt="GitHub" className="scale-150" />
+              </button>
             </div>
           </div>
-          <div className="green-light flex absolute"></div>
+          <div
+            id="light"
+            className="green-light light-color-g flex absolute"
+          ></div>
           <div className="tiny-buttons-container flex flex-col justify-center gap-1">
             <div className="tiny-container">
               <div className="tiny-btn"></div>
@@ -62,6 +80,9 @@ export const Pokedex = () => {
               loading={loading}
               error={error}
               pokemonID={pokemonID}
+              setPokemon={setPokemon}
+              pokemonName={pokemonName}
+              setPokemonName={setPokemonName}
             />
           </div>
         </div>

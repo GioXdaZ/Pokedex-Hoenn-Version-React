@@ -24,7 +24,7 @@ export const Pokedex = () => {
         setLoading(false);
         setError(true);
       });
-  }, []);
+  }, [pokemonID]);
 
   const RefreshPage = () => window.location.reload(false);
 

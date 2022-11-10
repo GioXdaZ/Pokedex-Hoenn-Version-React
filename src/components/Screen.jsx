@@ -29,14 +29,19 @@ export const Screen = ({
     fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonID}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.name);
         setPokemonName(data.name);
       });
+    setPokemonName = (data) => {
+      pokemonName = data.name;
+      setPokemon = document.querySelector("#search-pokemon").value;
+      pokemonName = setPokemon;
+      // console.log(setPokemon);
+    };
+    if (pokemonID !== setPokemon) {
+      console.log(pokemonName);
+      console.log(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
+    }
   };
-
-  useEffect(() => {
-    // searchPokemon();
-  }, [pokemon]);
 
   if (error) {
     return (
@@ -73,14 +78,15 @@ export const Screen = ({
       </div>
 
       <div className="container-screen--3 flex flex-row gap-1">
-        <div className="search-pokemon flex flex-row">
+        <label className="search-pokemon flex flex-row">
           <input
             type="text"
-            placeholder="Search Pokemon"
+            placeholder="Enter name or number of Pokemon"
             className="input w-full h-[25px] bg-gray-700"
             autoComplete="off"
+            id="search-pokemon"
             name="pokemon"
-            // onChange={searchPokemon}
+            onChange={searchPokemon}
           />
 
           <button
@@ -90,7 +96,7 @@ export const Screen = ({
           >
             <img src={SearchIcon} alt="SearchIcon" className="scale-150" />
           </button>
-        </div>
+        </label>
       </div>
     </div>
   );

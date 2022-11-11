@@ -2,18 +2,8 @@ import React, { useEffect } from "react";
 import "../App.css";
 import ErrorPokemon from "../assets/no-signal.gif";
 import LoadingPokemon from "../assets/loader.gif";
-import SearchIcon from "../assets/search.svg";
 
-export const Screen = ({
-  pokemon,
-  loading,
-  error,
-  pokemonID,
-  species,
-  setPokemon,
-  pokemonName,
-  setPokemonName,
-}) => {
+export const Screen = ({ pokemon, loading, error, pokemonID, species }) => {
   useEffect(() => {
     fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokemonID}`)
       .then((res) => res.json())
@@ -24,24 +14,6 @@ export const Screen = ({
       pokemonInfo.textContent = species.toUpperCase();
     };
   }, []);
-
-  const searchPokemon = () => {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonID}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setPokemonName(data.name);
-      });
-    setPokemonName = (data) => {
-      pokemonName = data.name;
-      setPokemon = document.querySelector("#search-pokemon").value;
-      pokemonName = setPokemon;
-      // console.log(setPokemon);
-    };
-    if (pokemonID !== setPokemon) {
-      console.log(pokemonName);
-      console.log(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
-    }
-  };
 
   if (error) {
     return (
@@ -54,7 +26,7 @@ export const Screen = ({
   return (
     <div className="screen flex flex-col gap-1 py-2 px-2">
       {!pokemon || loading ? (
-        <img src={LoadingPokemon} alt="Loading" />
+        <img src={LoadingPokemon} alt="Loading" className="pokedex-no-screen" />
       ) : (
         <div className="container-screen--1 flex flex-row gap-2">
           <img
@@ -74,29 +46,7 @@ export const Screen = ({
         </div>
       )}
       <div className="container-screen--2 flex flex-row">
-        <div className="pokemon-entries flex justify-center items-center text-sm text-justify"></div>
-      </div>
-
-      <div className="container-screen--3 flex flex-row gap-1">
-        <label className="search-pokemon flex flex-row">
-          <input
-            type="text"
-            placeholder="Enter name or number of Pokemon"
-            className="input w-full h-[25px] bg-gray-700"
-            autoComplete="off"
-            id="search-pokemon"
-            name="pokemon"
-            onChange={searchPokemon}
-          />
-
-          <button
-            type="submit"
-            onClick={searchPokemon}
-            className="btn btn-xs w-6 bg-red-700 hover:bg-red-300 flex justify-center items-center"
-          >
-            <img src={SearchIcon} alt="SearchIcon" className="scale-150" />
-          </button>
-        </label>
+        <div className="pokemon-entries flex justify-start items-start text-sm text-justify"></div>
       </div>
     </div>
   );

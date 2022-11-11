@@ -182,10 +182,16 @@
   border-radius: 15px;
 }
 
+.pokedex-no-screen {
+  width: 330px;
+  height: 300px;
+  border-radius: 10px;
+}
+
 .screen {
   display: flex;
   width: 330px;
-  height: 330px;
+  height: 300px;
   background: rgba(36, 58, 100, 0.521);
   border-radius: 10px;
 }

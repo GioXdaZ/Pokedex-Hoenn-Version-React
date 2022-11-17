@@ -7,11 +7,9 @@ import { Footer } from "./components/Footer";
 
 function App() {
   return (
-    <div>
+    <div className="flex flex-col">
       <Navbar />
-      <div className="background-body flex justify-center items-center h-[800px]">
-        <Pokedex></Pokedex>
-      </div>
+      <Pokedex className="flex justify-center items-center" />
       <Footer></Footer>
     </div>
   );
